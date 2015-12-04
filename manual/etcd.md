@@ -5,9 +5,7 @@ Get token
 ----------
 
     http https://discovery.etcd.io/new?size=2
-    http https://discovery.etcd.io/040d3daf1a03a6fe4ec505584c114568
-    http http://178.62.124.52:2379/v2/keys/_etcd/machines
-    http http://178.62.124.52:4001/v2/stats/leader
+    http https://discovery.etcd.io/dc629df6dc2b557dbfe9c8909fabbd15
 
 Manual setup
 -------------
@@ -73,8 +71,10 @@ Start etcd2
     sudo systemctl start etcd2
     sudo systemctl enable etcd2
     sudo systemctl status etcd2
-    systemctl list-dependencies --reverse etcd2
+    sudo systemctl list-dependencies etcd2
     sudo journalctl -u etcd2
+    sudo systemctl list-units
+    sudo systemctl daemon-reload
 
 Test etcd2 work
 ---------------
@@ -83,3 +83,4 @@ Test etcd2 work
     etcdctl get /message
     http http://178.62.34.94:2379/v2/keys/message
     etcdctl cluster-health
+    etcdctl ls / --recursive
