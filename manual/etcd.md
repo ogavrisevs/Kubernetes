@@ -88,8 +88,10 @@ Start etcd2
     sudo systemctl start etcd2
     sudo systemctl enable etcd2
     sudo systemctl status etcd2
-    systemctl list-dependencies --reverse etcd2
+    sudo systemctl list-dependencies etcd2
     sudo journalctl -u etcd2
+    sudo systemctl list-units
+    sudo systemctl daemon-reload
 
 Test etcd2 work
 ---------------
@@ -98,3 +100,4 @@ Test etcd2 work
     etcdctl get /message
     http http://178.62.34.94:2379/v2/keys/message
     etcdctl cluster-health
+    etcdctl ls / --recursive
