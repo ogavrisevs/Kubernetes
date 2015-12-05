@@ -4,8 +4,8 @@ Etcd2 config
 Get token
 ----------
 
-    http https://discovery.etcd.io/new?size=2
-    http https://discovery.etcd.io/040d3daf1a03a6fe4ec505584c114568
+    http https://discovery.etcd.io/new?size=5
+    http https://discovery.etcd.io/edc2789ab67e556ec6b205ec9b0fccb4
     http http://178.62.124.52:2379/v2/keys/_etcd/machines
     http http://178.62.124.52:4001/v2/stats/leader
 
@@ -32,8 +32,8 @@ etcd2 -name infra1 -v \
   -discovery=https://discovery.etcd.io/040d3daf1a03a6fe4ec505584c114568
 ```
 
-Systemd
--------
+Systemd setup
+--------------
 
      sudo vi /etc/systemd/system/etcd2.service
 
@@ -65,6 +65,21 @@ Environment="ETCD_ADVERTISE_CLIENT_URLS=http://178.62.34.94:2379,http://178.62.3
 Environment="ETCD_INITIAL_ADVERTISE_PEER_URLS=http://178.62.34.94:2380"
 Environment="ETCD_LISTEN_PEER_URLS=http://178.62.34.94:2380"
 Environment="ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://0.0.0.0:4001"
+```
+
+Cloud-config setup
+------------------
+
+```
+#cloud-config
+
+coreos:
+  etcd2:
+    discovery: "https://discovery.etcd.io/edc2789ab67e556ec6b205ec9b0fccb4"
+    advertise-client-urls: "http://$public_ipv4:2379"
+    initial-advertise-peer-urls: "http://$private_ipv4:2380"
+    listen-client-urls: "http://0.0.0.0:2379,http://0.0.0.0:4001"
+    listen-peer-urls: "http://$private_ipv4:2380,http://$private_ipv4:7001"
 ```
 
 Start etcd2
