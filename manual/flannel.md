@@ -32,10 +32,9 @@ coreos:
             [Service]
             ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
       command: start
-    - name: fleet.service
-      command: start      
 ````
 
+    sudo vi cloud-config.yaml
     sudo coreos-cloudinit -from-file cloud-config.yaml
 
     sudo systemctl start flanneld

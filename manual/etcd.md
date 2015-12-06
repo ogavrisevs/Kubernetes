@@ -4,8 +4,8 @@ Etcd2 config
 Get token
 ----------
 
-    http https://discovery.etcd.io/new?size=5
-    http https://discovery.etcd.io/edc2789ab67e556ec6b205ec9b0fccb4
+    http https://discovery.etcd.io/new?size=2
+    http https://discovery.etcd.io/c6434e7e3b99416c8cc851ae3ea830b0
     http http://178.62.124.52:2379/v2/keys/_etcd/machines
     http http://178.62.124.52:4001/v2/stats/leader
 
