@@ -9,7 +9,11 @@
     "containers": [
       {
         "name": "kube-controller-manager",
-        "image": "rhel7/kubernetes-controller-mgr",
+        "image": "gcr.io/google_containers/hyperkube:v1.3.6",
+        "command": [
+          "/hyperkube",
+          "controller-manager"
+        ],
         "volumeMounts": [
           {
             "name": "etcssl",
@@ -24,8 +28,10 @@
         ],
         "livenessProbe": {
           "httpGet": {
-            "path": "/healthz",
-            "port": 10252
+            "scheme": "HTTP",
+            "host": "127.0.0.1",
+            "port": 10252,
+            "path": "/healthz"
           },
           "initialDelaySeconds": 15,
           "timeoutSeconds": 15

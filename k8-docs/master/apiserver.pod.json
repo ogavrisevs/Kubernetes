@@ -9,14 +9,15 @@
     "containers": [
       {
         "name": "kube-apiserver",
-        "image": "rhel7/kubernetes-apiserver",
+        "image": "gcr.io/google_containers/hyperkube:v1.3.6",
         "command": [
-          "/usr/bin/kube-apiserver",
-          "--v=0",
+          "/hyperkube",
+          "apiserver",
           "--address=0.0.0.0",
           "--etcd_servers=http://master.example.com:2379",
           "--service-cluster-ip-range=10.254.0.0/16",
-          "--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota"
+          "--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota",
+          "--allow-privileged=false"
         ],
         "ports": [
           {
@@ -44,8 +45,10 @@
         ],
         "livenessProbe": {
           "httpGet": {
-            "path": "/healthz",
-            "port": 8080
+            "scheme": "HTTP",
+            "host": "127.0.0.1",
+            "port": 8080,
+            "path": "/healthz"
           },
           "initialDelaySeconds": 15,
           "timeoutSeconds": 15

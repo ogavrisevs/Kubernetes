@@ -9,29 +9,20 @@
     "containers": [
       {
         "name": "kube-scheduler",
-        "image": "rhel7/kubernetes-scheduler",
-        "volumeMounts": [
-          {
-            "name": "config",
-            "mountPath": "/etc/kubernetes",
-            "readOnly": true
-          }
+        "image": "gcr.io/google_containers/hyperkube:v1.3.6",
+        "command": [
+          "/hyperkube",
+          "scheduler"
         ],
         "livenessProbe": {
           "httpGet": {
-            "path": "/healthz",
-            "port": 10251
-          },
+             "scheme": "HTTP",
+             "host": "127.0.0.1",
+             "port": 10251,
+             "path": "/healthz"
+           },
           "initialDelaySeconds": 15,
           "timeoutSeconds": 15
-        }
-      }
-    ],
-    "volumes": [
-      {
-        "name": "config",
-        "hostPath": {
-          "path": "/etc/kubernetes"
         }
       }
     ]
