@@ -1,27 +1,28 @@
 
 
-git clone https://github.com/kubernetes/kubernetes.git
+    git clone https://github.com/kubernetes/kubernetes.git
 
-kubectl create -f examples/guestbook/redis-master-deployment.yaml
+    kubectl create -f /root/kubernetes/examples/guestbook/redis-master-deployment.yaml
 
-kubectl create -f examples/guestbook/redis-master-service.yaml
+    kubectl create -f /root/kubernetes/examples/guestbook/redis-master-service.yaml
 
 
-vim examples/guestbook/redis-slave-deployment.yaml
-vim examples/guestbook/frontend-deployment.yaml
-vim examples/guestbook/all-in-one/redis-slave.yaml
-vim examples/guestbook/all-in-one/frontend.yaml
-env:
-  - name: GET_HOSTS_FROM
-    value: env
+    vim examples/guestbook/redis-slave-deployment.yaml
+    vim examples/guestbook/frontend-deployment.yaml
+    vim examples/guestbook/all-in-one/redis-slave.yaml
+    vim examples/guestbook/all-in-one/frontend.yaml
+    env:
+      - name: GET_HOSTS_FROM
+        value: env
 
-kubectl create -f examples/guestbook/all-in-one/redis-slave.yaml
+    kubectl create -f /root/kubernetes/examples/guestbook/all-in-one/redis-slave.yaml
 
-vim examples/guestbook/all-in-one/frontend.yaml
-spec:
-  type: NodePort
+    vim /root/kubernetes/examples/guestbook/all-in-one/frontend.yaml
+    kind: Service
+      spec:
+        type: NodePort
 
-kubectl create -f examples/guestbook/all-in-one/frontend.yaml
+    kubectl create -f /root/kubernetes/examples/guestbook/all-in-one/frontend.yaml
 
 
 ------------------------------------------

@@ -7,14 +7,14 @@ Update Sys.
 
     yum update
     yum install -y epel-release
-    yum install -y vim httpie htop git
+    yum install -y vim httpie htop git tree telnet 
 
 Add hosts
 ----------
 
     vim /etc/hosts
-    46.101.129.15 master master.example.com
-    46.101.199.149  node1 node1.example.com
+    46.101.188.163 master master.example.com
+    139.59.208.61  node1 node1.example.com
 
 Install docker-engine (from yum extras) (for k8 v1.2 !)
 -----------------------------------------------------------

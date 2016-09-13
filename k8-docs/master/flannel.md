@@ -23,7 +23,7 @@ Check:
 
     etcdctl get atomic.io/network/config
 
-Config:
+Config (optional):
 
     vim /etc/sysconfig/flanneld
     FLANNEL_ETCD="http://master.example.com:2379"
@@ -33,6 +33,7 @@ Start:
 
     systemctl enable flanneld
     systemctl start flanneld
+    systemctl status flanneld
     systemctl reboot
 
 Check2 (2x.nodes):
