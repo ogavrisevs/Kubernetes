@@ -1,0 +1,40 @@
+---
+
+  - name: Move kubectl binarys to sys path.
+    command: cp -v /root/kubernetes/server/bin/kubectl /usr/bin/kubectl creates=/usr/bin/kubectl
+
+  - name: Move kubelet binarys to sys path.
+    command: cp -v /root/kubernetes/server/bin/kubelet /usr/bin/kubelet creates=/usr/bin/kubelet
+
+  - name: Create /etc/kubernetes dir
+    file:
+      path: /etc/kubernetes/manifests
+      state: directory
+
+  - name: Add kublet conf.
+    template:
+      src: kubelet.j2
+      dest: /etc/kubernetes/kubelet
+
+  - name: Create api/controller/scheduler pods
+    template:
+      src: "{{ item }}.j2"
+      dest: "/etc/kubernetes/manifests/{{ item }}"
+    with_items:
+      - apiserver.pod.json
+      - controller-manager.pod.json
+      - scheduler.pod.json
+
+  - name: Clone github repo kubernetes/contrib
+    git:
+      repo: https://github.com/kubernetes/contrib.git
+      dest: /root/contrib
+
+  - name: Copy kubelet.service file
+    command: cp -v /root/contrib/init/systemd/kubelet.service /usr/lib/systemd/system/kubelet.service creates=/usr/lib/systemd/system/kubelet.service
+
+  - name: Enable/Start kubelet service
+    service:
+      name: kubelet
+      enabled: yes
+      state: started

@@ -1,0 +1,73 @@
+{
+  "kind": "Pod",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "kube-apiserver"
+  },
+  "spec": {
+    "hostNetwork": true,
+    "containers": [
+      {
+        "name": "kube-apiserver",
+        "image": "gcr.io/google_containers/hyperkube:v1.3.6",
+        "command": [
+          "/hyperkube",
+          "apiserver",
+          "--address=0.0.0.0",
+          "--etcd_servers=http://master.example.com:2379",
+          "--service-cluster-ip-range=10.254.0.0/16",
+          "--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota",
+          "--allow-privileged=false"
+        ],
+        "ports": [
+          {
+            "name": "https",
+            "hostPort": 443,
+            "containerPort": 443
+          },
+          {
+            "name": "local",
+            "hostPort": 8080,
+            "containerPort": 8080
+          }
+        ],
+        "volumeMounts": [
+          {
+            "name": "etcssl",
+            "mountPath": "/etc/ssl",
+            "readOnly": true
+          },
+          {
+            "name": "config",
+            "mountPath": "/etc/kubernetes",
+            "readOnly": true
+          }
+        ],
+        "livenessProbe": {
+          "httpGet": {
+            "scheme": "HTTP",
+            "host": "127.0.0.1",
+            "port": 8080,
+            "path": "/healthz"
+          },
+          "initialDelaySeconds": 15,
+          "timeoutSeconds": 15
+        }
+      }
+    ],
+    "volumes": [
+      {
+        "name": "etcssl",
+        "hostPath": {
+          "path": "/etc/ssl"
+        }
+      },
+      {
+        "name": "config",
+        "hostPath": {
+          "path": "/etc/kubernetes"
+        }
+      }
+    ]
+  }
+}

@@ -1,5 +1,5 @@
 
-Preapare
+Prepare
 ============
 
 Update Sys.
@@ -7,7 +7,7 @@ Update Sys.
 
     yum update
     yum install -y epel-release
-    yum install -y vim httpie htop git tree telnet 
+    yum install -y vim httpie htop git tree telnet
 
 Add hosts
 ----------

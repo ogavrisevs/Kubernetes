@@ -1,0 +1,2 @@
+docker_repository_baseurl: https://yum.dockerproject.org/repo/main/centos/$releasever/
+docker_repository_gpgkey: https://yum.dockerproject.org/gpg

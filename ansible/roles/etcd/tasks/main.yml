@@ -1,0 +1,26 @@
+---
+
+  - name: Install etcd
+    yum:
+      name: etcd
+      state: latest
+
+  - name: Add etcd conf
+    template:
+      src=etcd.conf.j2
+      dest=/etc/etcd/etcd.conf
+
+  - name: Enable etcd service
+    service:
+      name=etcd
+      enabled=yes
+      state=started
+
+  - name: Check etcd state
+    shell: "etcdctl cluster-health"
+    register: out
+    changed_when: False
+    failed_when: "'cluster is healthy' not in out.stdout"
+
+  - name: Print etcd cluster state
+    debug: var=out.stdout_lines

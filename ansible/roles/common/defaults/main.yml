@@ -1,0 +1,9 @@
+---
+
+  utils_rpm:
+    - vim
+    - httpie
+    - htop
+    - git
+    - tree
+    - telnet

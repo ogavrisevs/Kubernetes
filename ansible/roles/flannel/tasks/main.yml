@@ -1,0 +1,34 @@
+---
+
+  - name: Install flannel
+    yum:
+      name: flannel
+      state: latest
+
+  - name: Add flannel conf
+    template:
+      src: flannel.j2
+      dest: /etc/sysconfig/flanneld
+
+  - name: Enable flannel service
+    service:
+      name: etcd
+      enabled: yes
+      state: started
+
+  - name: Check flannel for network cfg.
+    shell: "etcdctl ls atomic.io/network/config"
+    changed_when: False    
+    register: out
+    ignore_errors: yes
+
+  - name: Create k8 network cfg. file
+    template:
+      src: flannel-config.json.j2
+      dest: /root/flannel-config.json
+    changed_when: False
+    when:  "'Key not found' in out.stderr"
+
+  - name: Store flannel network cfg. in etcd
+    shell: "etcdctl set atomic.io/network/config < /root/flannel-config.json"
+    when:  "'Key not found' in out.stderr"

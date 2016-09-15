@@ -1,0 +1,45 @@
+---
+
+  - name: Move kubectl binarys to sys path.
+    command: cp -v /root/kubernetes/server/bin/kubectl /usr/bin/kubectl creates=/usr/bin/kubectl
+
+  - name: Move kube-proxy binarys to sys path.
+    command: cp -v /root/kubernetes/server/bin/kube-proxy /usr/bin/kube-proxy creates=/usr/bin/kube-proxy
+
+  - name: Move kubelet binarys to sys path.
+    command: cp -v /root/kubernetes/server/bin/kubelet /usr/bin/kubelet creates=/usr/bin/kubelet
+
+  - name: Create /etc/kubernetes dir
+    file:
+      path: /etc/kubernetes
+      state: directory
+
+  - name: Add kublet conf.
+    template:
+      src: kubelet.j2
+      dest: /etc/kubernetes/kubelet
+
+  - name: Add kube-proxy conf.
+    template:
+      src: proxy.j2
+      dest: /etc/kubernetes/proxy
+
+  - name: Clone github repo kubernetes/contrib
+    git:
+      repo: https://github.com/kubernetes/contrib.git
+      dest: /root/contrib
+
+  - name: Copy kubelet.service file
+    command: cp -v /root/contrib/init/systemd/kubelet.service /usr/lib/systemd/system/kubelet.service creates=/usr/lib/systemd/system/kubelet.service
+
+  - name: Copy kube-proxy.service file
+    command: cp -v /root/contrib/init/systemd/kube-proxy.service /usr/lib/systemd/system/kube-proxy.service creates=/usr/lib/systemd/system/kube-proxy.service
+
+  - name: Enable/Start kubelet and kube-proxy service
+    service:
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+      - kubelet
+      - kube-proxy
