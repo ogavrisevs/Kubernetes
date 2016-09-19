@@ -30,4 +30,4 @@
       - kubernetes
       - k8-node
     tags:
-     - node
+      - node

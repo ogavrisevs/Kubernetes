@@ -1,0 +1,10 @@
+---
+
+  - name: Create api/controller/scheduler pods
+    template:
+      src: "{{ item }}.j2"
+      dest: "/etc/kubernetes/manifests/{{ item }}"
+    with_items:
+      - apiserver.pod.json
+      - controller-manager.pod.json
+      - scheduler.pod.json

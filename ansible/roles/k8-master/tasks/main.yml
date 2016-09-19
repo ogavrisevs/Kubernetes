@@ -16,14 +16,8 @@
       src: kubelet.j2
       dest: /etc/kubernetes/kubelet
 
-  - name: Create api/controller/scheduler pods
-    template:
-      src: "{{ item }}.j2"
-      dest: "/etc/kubernetes/manifests/{{ item }}"
-    with_items:
-      - apiserver.pod.json
-      - controller-manager.pod.json
-      - scheduler.pod.json
+  - include: api.yml
+  - include: dns.yml
 
   - name: Clone github repo kubernetes/contrib
     git:
@@ -33,8 +27,13 @@
   - name: Copy kubelet.service file
     command: cp -v /root/contrib/init/systemd/kubelet.service /usr/lib/systemd/system/kubelet.service creates=/usr/lib/systemd/system/kubelet.service
 
+  - name: Create the /var/lib/kubelet working directory
+    file:
+      path: /var/lib/kubelet
+      state: directory
+
   - name: Enable/Start kubelet service
     service:
       name: kubelet
       enabled: yes
-      state: started
+      state: restarted
