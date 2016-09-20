@@ -2,16 +2,16 @@
 
   - name: Install docker custom repository
     template:
-      src=dockerrepo.repo.j2
-      dest=/etc/yum.repos.d/dockerrepo.repo
+      src: dockerrepo.repo.j2
+      dest: /etc/yum.repos.d/dockerrepo.repo
 
   - name: Install Docker
     yum:
-      name=docker-engine
-      state=latest
+      name: docker-engine
+      state: latest
 
   - name: Enable docker service
     service:
-      name=docker
-      enabled=yes
-      state=started
+      name: docker
+      enabled: yes
+      state: started

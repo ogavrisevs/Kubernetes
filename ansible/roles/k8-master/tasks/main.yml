@@ -17,7 +17,6 @@
       dest: /etc/kubernetes/kubelet
 
   - include: api.yml
-  - include: dns.yml
 
   - name: Clone github repo kubernetes/contrib
     git:
@@ -32,8 +31,17 @@
       path: /var/lib/kubelet
       state: directory
 
-  - name: Enable/Start kubelet service
+  - name: Enable/Start kubelet service (This will start api also)
     service:
       name: kubelet
       enabled: yes
       state: restarted
+
+  - name: Wait for API pod to start
+    wait_for:
+      host: localhost
+      port: 8080
+      delay: 10
+      state: started
+
+  - include: dns.yml

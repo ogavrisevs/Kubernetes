@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   hostname: busybox-1
-  subdomain: default-1
+  subdomain: subdomain
   containers:
   - image: busybox
     command:

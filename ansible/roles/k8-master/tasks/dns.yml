@@ -1,9 +1,5 @@
 ---
 
-  #- name: Get k8s Master ip
-  #  set_fact:
-  #    k8s_master_ip: "{{ hostvars[groups['master'][0]] }}"
-
   - name: Create a skydns-rc / skydns-svc tmeplate
     template:
       src: "{{ item}}.yaml.j2"
@@ -14,6 +10,7 @@
 
   - name: Create a rc and service
     command: "kubectl create -f /root/{{ item }}.yaml"
+    register: out
     with_items:
       - skydns-rc
       - skydns-svc

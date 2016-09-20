@@ -10,15 +10,9 @@
       src: flannel.j2
       dest: /etc/sysconfig/flanneld
 
-  - name: Enable flannel service
-    service:
-      name: etcd
-      enabled: yes
-      state: started
-
   - name: Check flannel for network cfg.
     shell: "etcdctl ls atomic.io/network/config"
-    changed_when: False    
+    changed_when: False
     register: out
     ignore_errors: yes
 
@@ -32,3 +26,29 @@
   - name: Store flannel network cfg. in etcd
     shell: "etcdctl set atomic.io/network/config < /root/flannel-config.json"
     when:  "'Key not found' in out.stderr"
+
+  - name: Check docker existence
+    command: docker version
+    register: has_docker
+    changed_when: false
+    failed_when: false
+
+  - name: stop docker (to delete docker0 intf.)
+    service: name=docker state=stopped
+    when: '"docker0" in ansible_interfaces'
+
+  - name: delete docker0 intf.
+    command: ip link delete docker0
+    when: '"docker0" in ansible_interfaces'
+
+  - name: docker start service
+    service:
+      name: docker
+      state: started
+    when: has_docker.rc|int != 2
+
+  - name: Enable flanneld service
+    service:
+      name: flanneld
+      enabled: yes
+      state: started

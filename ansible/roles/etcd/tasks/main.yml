@@ -7,14 +7,14 @@
 
   - name: Add etcd conf
     template:
-      src=etcd.conf.j2
-      dest=/etc/etcd/etcd.conf
+      src: etcd.conf.j2
+      dest: /etc/etcd/etcd.conf
 
   - name: Enable etcd service
     service:
-      name=etcd
-      enabled=yes
-      state=started
+      name: etcd
+      enabled: yes
+      state: started
 
   - name: Check etcd state
     shell: "etcdctl cluster-health"

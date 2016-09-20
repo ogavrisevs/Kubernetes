@@ -12,7 +12,7 @@
 
   - name: Add Epel Repo
     yum:
-      name: "epel-release"
+      name: epel-release
       state: latest
 
   - name: Install utils and stuff
@@ -21,3 +21,6 @@
       state: latest
     with_items:
       - "{{ utils_rpm }}"
+
+  - include: fail2ban.yml
+  

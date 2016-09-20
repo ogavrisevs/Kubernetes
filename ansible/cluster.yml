@@ -6,6 +6,7 @@
     become: yes
     roles:
       - common
+      - flannel
       - docker
     tags:
       - all
@@ -16,7 +17,6 @@
     become: yes
     roles:
       - etcd
-      - flannel
       - kubernetes
       - k8-master
     tags:
