@@ -9,11 +9,20 @@
     template:
       src: etcd.conf.j2
       dest: /etc/etcd/etcd.conf
+    notify:
+      - restart etcd
 
   - name: Enable etcd service
     service:
       name: etcd
       enabled: yes
+      state: started
+
+  - name: Wait for etcd to start
+    wait_for:
+      host: localhost
+      port: 2379
+      delay: 10
       state: started
 
   - name: Check etcd state

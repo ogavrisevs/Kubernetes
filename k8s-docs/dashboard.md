@@ -1,3 +1,4 @@
+
 K8 dashboard UI
 ===============
 
@@ -5,10 +6,13 @@ K8 dashboard UI
 
     git clone https://github.com/kubernetes/dashboard.git
     vim dashboard/src/deploy/kubernetes-dashboard.yaml
-      #uncomment
+      #uncomment (no dns on system)
       - --apiserver-host=http://master.example.com:8080
 
-    kubectl create -f dashboard/src/deploy/kubernetes-dashboard.yaml
+      #uncomment (dns running )
+      - --apiserver-host=http://46.101.96.173:8080
 
+    kubectl --namespace=kube-system describe service kubernetes-dashboard
+    kubectl exec busybox -- nslookup kubernetes-dashboard.kube-system.svc.example.com
     kubectl describe -f dashboard/src/deploy/kubernetes-dashboard.yaml
     kubectl delete -f dashboard/src/deploy/kubernetes-dashboard.yaml

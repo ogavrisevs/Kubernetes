@@ -28,3 +28,15 @@ kubectl run/exe
     kubectl run curl --image=radial/busyboxplus:curl -i --tty
     kubectl exec my-nginx-3800858182-jr4a2 -- command
     kubectl exec --namespace=kube-system kube-dns-v19-6udvw -- ip a
+    kubectl exec centos -i --tty -- bash
+    kubectl exec --namespace=kube-system kube-dns-v19-3boaj -c kubedns -i -t -- bash
+
+Check services
+----------------
+
+    systemctl status flanneld
+    systemctl status kubelet
+    systemctl status kube-proxy
+    kubectl get pods -o yaml --namespace=kube-system
+    kubectl --namespace=kube-system describe pods kube-dns-v19-3boaj
+    kubectl --namespace=kube-system logs  kube-dns-v19-3boaj kubedns

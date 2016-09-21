@@ -1,0 +1,11 @@
+---
+
+  - name: start etcd
+    service:
+      name: etcd
+      state: started
+
+  - name: restart etcd
+    service:
+      name: etcd
+      state: restarted

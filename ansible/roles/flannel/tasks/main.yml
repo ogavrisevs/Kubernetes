@@ -9,6 +9,8 @@
     template:
       src: flannel.j2
       dest: /etc/sysconfig/flanneld
+    notify:
+      - restart flannel
 
   - name: Check flannel for network cfg.
     shell: "etcdctl ls atomic.io/network/config"
@@ -27,28 +29,18 @@
     shell: "etcdctl set atomic.io/network/config < /root/flannel-config.json"
     when:  "'Key not found' in out.stderr"
 
-  - name: Check docker existence
-    command: docker version
-    register: has_docker
-    changed_when: false
-    failed_when: false
-
-  - name: stop docker (to delete docker0 intf.)
-    service: name=docker state=stopped
-    when: '"docker0" in ansible_interfaces'
-
-  - name: delete docker0 intf.
-    command: ip link delete docker0
-    when: '"docker0" in ansible_interfaces'
-
-  - name: docker start service
-    service:
-      name: docker
-      state: started
-    when: has_docker.rc|int != 2
-
   - name: Enable flanneld service
     service:
       name: flanneld
       enabled: yes
       state: started
+    notify:
+      - restart docker
+
+  - name: Add docker drop in cfg.
+    copy:
+      src: flannel.conf
+      dest: /usr/lib/systemd/system/docker.service.d/flannel.conf
+      mode: 0644
+    notify:
+      - restart docker

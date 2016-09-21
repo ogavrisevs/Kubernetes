@@ -1,0 +1,48 @@
+---
+
+  - name: restart flannel
+    service:
+      name: flanneld
+      state: restarted
+    notify:
+      - restart docker
+
+  - name: restart docker
+    command: /bin/true
+    notify:
+      - check docker existence
+      - stop docker
+      - delete docker0
+      - start docker
+
+  - name: check docker existence
+    command: "docker version"
+    register: has_docker
+    changed_when: false
+    failed_when: false
+
+  - name: start docker
+    command: /bin/true
+    notify:
+      - check docker existence
+      - docker graph driver
+      - docker start service
+
+  - name: stop docker
+    service: name=docker state=stopped
+    when: '"docker0" in ansible_interfaces'
+
+  - name: delete docker0
+    command: ip link delete docker0
+    when: '"docker0" in ansible_interfaces'
+
+  - name: docker graph driver
+    command: findmnt -no FSTYPE -T /var/lib/docker
+    register: docker_driver
+    ignore_errors: true
+    when: has_docker.rc|int != 2
+    changed_when: false
+
+  - name: docker start service
+    service: name=docker state=started
+    when: has_docker.rc|int != 2

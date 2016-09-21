@@ -1,22 +1,20 @@
 ---
 
-  - name: All K8 nodes
+  - name: K8 all nodes
     hosts: all
     user: root
-    become: yes
     roles:
       - common
-      - flannel
-      - docker
     tags:
       - all
 
   - name: K8 master
     hosts: master
     user: root
-    become: yes
     roles:
       - etcd
+      - flannel
+      - docker
       - kubernetes
       - k8-master
     tags:
@@ -25,8 +23,9 @@
   - name: K8 node
     hosts: nodes
     user: root
-    become: yes
     roles:
+      - flannel
+      - docker
       - kubernetes
       - k8-node
     tags:

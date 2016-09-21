@@ -1,6 +1,5 @@
-
 [master]
-master.example.com ansible_host=139.59.138.87
+master.example.com ansible_host=46.101.96.173
 
 [nodes]
-node-1.example.com  ansible_host=139.59.129.84
+node-1.example.com  ansible_host=139.59.154.103
