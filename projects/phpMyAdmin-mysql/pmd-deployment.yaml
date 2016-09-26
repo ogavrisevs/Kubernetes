@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: open-data-lv-pmd
+  labels:
+    app: open-data-lv
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: open-data-lv
+    tier: pmd
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: open-data-lv-pmd
+  labels:
+    app: open-data-lv
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: open-data-lv
+        tier: pmd
+    spec:
+      containers:
+      - image: phpmyadmin/phpmyadmin
+        name: phpmyadmin
+        env:
+        - name: PMA_HOST
+          value: open-data-lv-mysql
+        - name: PMA_PORT
+          value: "3306"
+        - name: PMA_USER
+          value: root
+        - name: PMA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password.txt
+        ports:
+        - containerPort: 8080
+          name: open-data-lv

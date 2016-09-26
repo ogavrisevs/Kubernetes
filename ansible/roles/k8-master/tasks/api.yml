@@ -1,5 +1,10 @@
 ---
 
+  - name: Create /etc/kubernetes dir
+    file:
+      path: /etc/kubernetes/manifests
+      state: directory
+
   - name: Create api/controller/scheduler pods
     template:
       src: "{{ item }}.j2"
@@ -8,3 +13,5 @@
       - apiserver.pod.json
       - controller-manager.pod.json
       - scheduler.pod.json
+    notify:
+      - restart kubelet 

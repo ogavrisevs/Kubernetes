@@ -8,6 +8,7 @@
     kubectl create -f /root/centos.yaml
 
     kubectl exec busybox -- nslookup kubernetes
+
     kubectl exec busybox -- nslookup kubernetes.default.svc.example.com
     kubectl exec centos -- dig kubernetes.default.svc.example.com
 

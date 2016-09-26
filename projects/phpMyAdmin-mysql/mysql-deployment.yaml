@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: open-data-lv-mysql
+  labels:
+    app: open-data-lv
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: open-data-lv
+    tier: mysql
+  clusterIP: None
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: open-data-lv-mysql
+  labels:
+    app: open-data-lv
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: open-data-lv
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password.txt
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-glusterf-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-glusterf-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim

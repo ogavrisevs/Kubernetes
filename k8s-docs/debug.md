@@ -15,7 +15,6 @@ kubectl describe
     kubectl --namespace=kube-system describe service kube-dns
     kubectl --namespace=kube-system describe ep
 
-
 kubectl logs
 ------------
 
@@ -36,7 +35,9 @@ Check services
 
     systemctl status flanneld
     systemctl status kubelet
+      journalctl -u  kubelet
     systemctl status kube-proxy
     kubectl get pods -o yaml --namespace=kube-system
     kubectl --namespace=kube-system describe pods kube-dns-v19-3boaj
-    kubectl --namespace=kube-system logs  kube-dns-v19-3boaj kubedns
+    kubectl --namespace=kube-system logs  kube-dns-v19-jbl7y kubedns
+    kubectl get componentstatuses

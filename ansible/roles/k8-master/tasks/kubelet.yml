@@ -1,0 +1,36 @@
+---
+
+  - name: Move kubelet binarys to sys path.
+    command: cp -v /root/kubernetes/server/bin/kubelet /usr/bin/kubelet creates=/usr/bin/kubelet
+
+  - name: Create /etc/kubernetes dir
+    file:
+      path: /etc/kubernetes/manifests
+      state: directory
+
+  - name: Add kublet conf.
+    template:
+      src: kubelet.j2
+      dest: /etc/kubernetes/kubelet
+    notify:
+      - restart kubelet
+
+  - name: Clone github repo kubernetes/contrib
+    git:
+      repo: https://github.com/kubernetes/contrib.git
+      dest: /root/contrib
+
+  - name: Copy kubelet.service file
+    command: cp -v /root/contrib/init/systemd/kubelet.service /usr/lib/systemd/system/kubelet.service creates=/usr/lib/systemd/system/kubelet.service
+
+  - name: Create the /var/lib/kubelet working directory
+    file:
+      path: /var/lib/kubelet
+      state: directory
+
+  - name: Enable/Start kubelet service (This will start api also)
+    service:
+      name: kubelet
+      enabled: yes
+    notify:
+      - restart kubelet
