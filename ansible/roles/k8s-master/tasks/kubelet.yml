@@ -28,7 +28,7 @@
       path: /var/lib/kubelet
       state: directory
 
-  - name: Enable/Start kubelet service (This will start api also)
+  - name: Enable/Start kubelet service (This will start api also )
     service:
       name: kubelet
       enabled: yes

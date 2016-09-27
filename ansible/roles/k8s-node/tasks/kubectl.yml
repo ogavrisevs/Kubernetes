@@ -1,0 +1,4 @@
+---
+
+  - name: Move kubectl binarys to sys path.
+    command: cp -v /root/kubernetes/server/bin/kubectl /usr/bin/kubectl creates=/usr/bin/kubectl

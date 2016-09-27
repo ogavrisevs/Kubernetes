@@ -10,9 +10,11 @@ K8 dashboard UI
       - --apiserver-host=http://master.example.com:8080
 
       #uncomment (dns running )
-      - --apiserver-host=http://46.101.96.173:8080
+      - --apiserver-host=http://138.68.71.141:8080
+
+    kubectl create -f dashboard/src/deploy/kubernetes-dashboard.yaml
 
     kubectl --namespace=kube-system describe service kubernetes-dashboard
-    kubectl exec busybox -- nslookup kubernetes-dashboard.kube-system.svc.example.com
+      kubectl exec busybox -- nslookup kubernetes-dashboard.kube-system.svc.example.com
     kubectl describe -f dashboard/src/deploy/kubernetes-dashboard.yaml
     kubectl delete -f dashboard/src/deploy/kubernetes-dashboard.yaml

@@ -16,7 +16,9 @@
       - flannel
       - docker
       - kubernetes
-      - k8-master
+      - k8s-master
+      - k8s-dns
+      - k8s-dashboard
     tags:
       - master
 
@@ -27,6 +29,6 @@
       - flannel
       - docker
       - kubernetes
-      - k8-node
+      - k8s-node
     tags:
       - node

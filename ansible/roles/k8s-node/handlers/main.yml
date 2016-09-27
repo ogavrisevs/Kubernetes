@@ -1,0 +1,41 @@
+---
+
+  - name: restart kube-proxy
+    command: /bin/true
+    notify:
+      - stop kube-proxy
+      - start kube-proxy
+
+  - name: stop kube-proxy
+    service:
+      name: kube-proxy
+      state: stopped
+
+  - name: start kube-proxy
+    service:
+      name: kube-proxy
+      state: started
+
+  - name: restart kubelet
+    command: /bin/true
+    notify:
+      - stop kubelet
+      - start kubelet
+      - wait kubelet to start
+
+  - name: stop kubelet
+    service:
+      name: kubelet
+      state: stopped
+
+  - name: start kubelet
+    service:
+      name: kubelet
+      state: started
+
+  - name: wait kubelet to start
+    wait_for:
+      host: localhost
+      port: 8080
+      delay: 10
+      state: started

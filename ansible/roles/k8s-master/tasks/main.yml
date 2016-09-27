@@ -4,4 +4,3 @@
   - include: kubectl.yml
   - include: kubelet.yml
   - include: kube-proxy.yml
-  - include: dns.yml

@@ -1,0 +1,19 @@
+---
+
+  - name: Create kubernetes-dashboard.yaml
+    template:
+        src: "kubernetes-dashboard.yaml.j2"
+        dest: "/root/kubernetes-dashboard.yaml"
+
+  - name: Create a kubernetes-dashboard service
+    command: "kubectl create -f /root/kubernetes-dashboard.yaml"
+    register: out-kubernetes-dashboard
+    ignore_errors: yes
+
+  - name: Get kubernetes-dashboard service port
+    command: "kubectl --namespace=kube-system describe service kubernetes-dashboard"
+    register: out
+    changed_when: False
+
+  - name: Print service port
+    debug: var=out.stdout_lines

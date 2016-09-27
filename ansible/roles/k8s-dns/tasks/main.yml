@@ -1,0 +1,27 @@
+---
+
+  - name: Create a skydns-rc / skydns-svc tmeplate
+    template:
+      src: "{{ item}}.yaml.j2"
+      dest: "/root/{{ item }}.yaml"
+    with_items:
+      - skydns-rc
+      - skydns-svc
+
+  - name: Create a skydns-rc service
+    command: "kubectl create -f /root/skydns-rc.yaml"
+    register: out-skydns-rc
+    ignore_errors: yes
+
+  - name: Create a skydns-svc service
+    command: "kubectl create -f /root/skydns-svc.yaml"
+    register: out-skydns-svc
+    ignore_errors: yes
+
+  #- name: Check if skydns-rc is created
+  #  command: /bin/true
+  #  failed_when: "out-skydns-rc.rc != 0 and 'already exists' not in out-skydns-rc.stderr"
+
+  #- name: Check if skydns-svc is created
+  #  command: /bin/true
+  #  failed_when: "out-skydns-svc.stderr !=0 and 'provided IP is already allocated' not in out-skydns-svc.stderr"
