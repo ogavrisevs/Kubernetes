@@ -24,9 +24,8 @@
   - name: Copy kube-proxy.service file
     command: cp -v /root/contrib/init/systemd/kube-proxy.service /usr/lib/systemd/system/kube-proxy.service creates=/usr/lib/systemd/system/kube-proxy.service
 
-  - name: Enable/Start kube-proxy service 
+  - name: Enable/Start kube-proxy service
     service:
-      name: "kube-proxy"
+      name: kube-proxy
       enabled: yes
-    notify:
-      - start kube-proxy
+      state: started

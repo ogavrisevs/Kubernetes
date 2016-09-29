@@ -28,21 +28,26 @@ spec:
         tier: mysql
     spec:
       containers:
-      - image: mysql:5.6
-        name: mysql
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-pass
-              key: password.txt
-        ports:
-        - containerPort: 3306
+        - image: mysql:5.6
           name: mysql
-        volumeMounts:
-        - name: mysql-glusterf-storage
-          mountPath: /var/lib/mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-pass
+                  key: password.txt
+          ports:
+            - containerPort: 3306
+              name: mysql-port
+          volumeMounts:
+            - name: mysql-glusterf-storage
+              mountPath: /var/lib/mysql
+          livenessProbe:
+            tcpSocket:
+              port: mysql-port
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
       volumes:
-      - name: mysql-glusterf-storage
-        persistentVolumeClaim:
-          claimName: mysql-pv-claim
+        - name: mysql-glusterf-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim

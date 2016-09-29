@@ -1,0 +1,35 @@
+---
+
+  #- debug: msg=" {{ groups['nodes'] | join(',') }} "
+
+  - name: Install GlusterFs repo
+    yum:
+      name: centos-release-gluster
+      state: latest
+
+  - name: Install GlusterFs Server
+    yum:
+      name: glusterfs-server
+      state: latest
+
+  - name: Enable/Start glusterd service
+    service:
+      name: glusterd
+      enabled: yes
+      state: started
+
+  - name: create gluster volume
+    gluster_volume:
+      state: present
+      name: gluster_vol-1
+      bricks: /gluster_vol-1
+      #rebalance: yes
+      cluster: "{{ groups['nodes'] | join(',') }}"
+      replicas: "2"
+      force: true
+    run_once: true
+
+#bricks=/bricks/brick1/g1
+#gluster volume create gluster_vol-1 replica 2 transport tcp node-1.example.com:None node-2.example.com:None)
+ #gluster volume create gluster_vol-1 replica 2 transport tcp node-1.example.com:/gluster_vol-1 node-2.example.com:/gluster_vol-1 force
+  #gluster volume start gluster_vol-1

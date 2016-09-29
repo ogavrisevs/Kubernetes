@@ -32,5 +32,4 @@
     service:
       name: kubelet
       enabled: yes
-    notify:
-      - restart kubelet
+      state: started

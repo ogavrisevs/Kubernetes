@@ -42,6 +42,8 @@ spec:
             secretKeyRef:
               name: mysql-pass
               key: password.txt
+        - name: PMA_ARBITRARY
+          value: "1"
         ports:
         - containerPort: 8080
           name: open-data-lv
