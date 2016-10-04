@@ -1,5 +1,6 @@
 ---
 
+  #- include: gen-certs.yml
   - include: api.yml
   - include: kubectl.yml
   - include: kubelet.yml

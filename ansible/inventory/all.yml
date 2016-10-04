@@ -1,6 +1,13 @@
 [master]
-master.example.com ansible_host=138.68.82.110
+master.example.com ansible_host=138.68.94.57
 
 [nodes]
-node-1.example.com ansible_host=138.68.82.111
-node-2.example.com ansible_host=138.68.82.112
+node-1.example.com ansible_host=139.59.158.186
+node-2.example.com ansible_host=46.101.223.89
+
+[all-k8s:children]
+master
+nodes
+
+[digitalocean]
+localhost ansible_connection=local

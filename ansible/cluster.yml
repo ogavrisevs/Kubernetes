@@ -1,13 +1,13 @@
 ---
 
   - name: K8 all nodes
-    hosts: all
+    hosts: all-k8s
     user: root
     roles:
       - common
       - kubernetes
     tags:
-      - all
+      - all-nodes
 
   - name: K8S prepare master
     hosts: master

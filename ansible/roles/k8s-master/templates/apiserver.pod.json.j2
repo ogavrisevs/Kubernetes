@@ -9,13 +9,22 @@
     "containers": [
       {
         "name": "kube-apiserver",
-        "image": "gcr.io/google_containers/hyperkube:v1.3.6",
+        "image": "gcr.io/google_containers/hyperkube:v1.4.0",
         "command": [
           "/hyperkube",
           "apiserver",
-          "--address=0.0.0.0",
+          "--insecure-bind-address=0.0.0.0",
+          "--bind-address=0.0.0.0",
           "--etcd_servers=http://master.example.com:2379",
           "--service-cluster-ip-range=10.254.0.0/16",
+          "--secure-port=6443",
+          "--insecure-port=8080",
+          "--basic-auth-file=/etc/kubernetes/htpasswd",
+          "--tls-cert-file=/var/run/kubernetes/kubelet.crt",
+          "--tls-private-key-file=/var/run/kubernetes/kubelet.key",
+          "--client-ca-file=/etc/kubernetes/certs/ca.crt",
+          "--tls-cert-file=/etc/kubernetes/certs/server.crt",
+          "--tls-private-key-file=/etc/kubernetes/certs/server.key",
           "--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota",
           "--allow-privileged=false"
         ],

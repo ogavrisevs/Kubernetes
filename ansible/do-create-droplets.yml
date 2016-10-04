@@ -1,0 +1,40 @@
+---
+  #export DO_API_TOKEN=32*****************************2
+  - name: Create droplets
+    hosts: digitalocean
+    tasks:
+
+    - name: Install DO API lib
+      pip:
+        name: dopy
+        version: 0.3.5
+        state: present
+
+    - name: ensure key exists at DigitalOcean
+      digital_ocean:
+        state: present
+        command: ssh
+        name: id_rsa
+        ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+      register: my_ssh_key
+
+    - digital_ocean:
+        state: present
+        command: droplet
+        name: "centos-1gb-fra1-{{ item }}"
+        unique_name: yes
+        size_id: 1gb
+        region_id: fra1
+        image_id: centos-7-2-x64
+        ssh_key_ids: "{{ my_ssh_key.ssh_key.id }}"
+        wait_timeout: 500
+      register: my_droplet
+      with_items:
+        - master
+        #- node-1
+        #- node-2
+
+    - debug:
+        msg: "{{ item.droplet.name }} , {{ item.droplet.ip_address }}"
+        #verbosity: "1"
+      with_items: "{{ my_droplet.results }}"

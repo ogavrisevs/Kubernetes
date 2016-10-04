@@ -14,4 +14,25 @@
       - controller-manager.pod.json
       - scheduler.pod.json
     notify:
-      - restart kubelet 
+      - restart kubelet
+
+  - name: Add user pwd file.
+    copy:
+      src: htpasswd
+      dest: /etc/kubernetes/htpasswd
+
+
+  #- name: Install python-passlib lib for pwd gen.
+  #  yum:
+  #    name: python-passlib
+  #    state: latest
+
+  #- name: Create password file for basic auth
+  #  htpasswd:
+  #    create: true
+  #    name: user
+  #    password: password
+  #    path: /etc/kubernetes/htpasswd
+  #    state: present
+  #  notify:
+  #    - restart kubelet

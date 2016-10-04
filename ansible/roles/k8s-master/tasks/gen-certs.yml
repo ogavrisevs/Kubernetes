@@ -1,0 +1,53 @@
+---
+
+  - name: Mkdir cert dir
+    file:
+      state: directory
+      path: "/etc/kubernetes/certs"
+
+  - name: Install openssl for easy-rsa stuff
+    yum:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - openssl
+      - curl
+
+  #- name: Get create ca cert script from Kubernetes
+  #  get_url:
+  #    url=https://raw.githubusercontent.com/kubernetes/kubernetes/master/cluster/saltbase/salt/generate-cert/make-ca-cert.sh
+  #    dest={{ kube_script_dir }}/make-ca-cert.sh mode=0500
+  #    force=yes
+
+  - name: HACK | overwrite make-ca-cert.sh from local copy
+    copy:
+      src: make-ca-cert.sh
+      dest: "/etc/kubernetes/certs/make-ca-cert.sh"
+      mode: "0500"
+    changed_when: false
+
+  # FIXME This only generates a cert for one master...
+  - name: Run create cert script on master
+    command:
+      "/etc/kubernetes/certs/make-ca-cert.sh"
+    args:
+      creates: "/etc/kubernetes/certs/server.crt"
+    environment:
+      MASTER_IP: "{{ ansible_default_ipv4.address }}"
+      MASTER_NAME: "master.example.com"
+      DNS_DOMAIN: "example.com"
+      CERT_DIR: "/etc/kubernetes/certs"
+      CERT_GROUP: "root"
+
+  - name: Verify certificate permissions
+    file:
+      path: "{{ item }}"
+      group: "root"
+      owner: "root"
+      mode: "0440"
+    with_items:
+      - "/etc/kubernetes/certs/ca.crt"
+      - "/etc/kubernetes/certs/server.crt"
+      - "/etc/kubernetes/certs/server.key"
+      - "/etc/kubernetes/certs/kubecfg.crt"
+      - "/etc/kubernetes/certs/kubecfg.key"

@@ -9,10 +9,11 @@
     "containers": [
       {
         "name": "kube-controller-manager",
-        "image": "gcr.io/google_containers/hyperkube:v1.3.6",
+        "image": "gcr.io/google_containers/hyperkube:v1.4.0",
         "command": [
           "/hyperkube",
-          "controller-manager"
+          "controller-manager",
+          "--master=http://master.example.com:8080"
         ],
         "volumeMounts": [
           {

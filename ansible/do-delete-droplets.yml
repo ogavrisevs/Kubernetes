@@ -1,0 +1,20 @@
+---
+  #export DO_API_TOKEN=32*****************************2
+  - name: Create droplets
+    hosts: digitalocean
+    tasks:
+    - name: Install DO API lib
+      pip:
+        name: dopy
+        version: 0.3.5
+        state: present
+
+    - digital_ocean:
+        state: absent
+        command: droplet
+        name: "centos-1gb-fra1-{{ item }}"
+        unique_name: yes
+      with_items:
+        - master
+        - node-1
+        - node-2
