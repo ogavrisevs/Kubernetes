@@ -51,3 +51,5 @@
       - "/etc/kubernetes/certs/server.key"
       - "/etc/kubernetes/certs/kubecfg.crt"
       - "/etc/kubernetes/certs/kubecfg.key"
+    notify:
+      - restart kubelet

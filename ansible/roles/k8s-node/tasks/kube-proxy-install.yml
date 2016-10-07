@@ -8,14 +8,6 @@
       path: /etc/kubernetes/manifests
       state: directory
 
-  - name: Add kube-proxy conf.
-    copy:
-      src: proxy
-      dest: /etc/kubernetes/proxy
-      mode: 0644
-    notify:
-      - restart kube-proxy
-
   - name: Clone github repo kubernetes/contrib
     git:
       repo: https://github.com/kubernetes/contrib.git
@@ -23,6 +15,8 @@
 
   - name: Copy kube-proxy.service file
     command: cp -v /root/contrib/init/systemd/kube-proxy.service /usr/lib/systemd/system/kube-proxy.service creates=/usr/lib/systemd/system/kube-proxy.service
+
+  - include: kube-proxy-cfg.yml
 
   - name: Enable/Start kube-proxy service
     service:

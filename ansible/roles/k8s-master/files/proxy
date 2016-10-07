@@ -1,1 +1,1 @@
-KUBE_MASTER="--master=http://master.example.com:8080"
+KUBE_MASTER="--master=http://127.0.0.1:8080"

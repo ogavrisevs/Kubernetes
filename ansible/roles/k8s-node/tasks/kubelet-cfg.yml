@@ -1,0 +1,38 @@
+---
+
+  - name: Get the node token values
+    slurp:
+      src: "/etc/kubernetes/tokens/system:kubelet.token"
+    register: tokens
+    delegate_to: "{{ groups['master'][0] }}"
+
+  - name: Set token facts
+    set_fact:
+      kubelet_token: "{{ tokens.content|b64decode }}"
+
+  - name: Add kublet conf.
+    template:
+      src: kubelet.j2
+      dest: /etc/kubernetes/kubelet
+    notify:
+      - restart kubelet
+
+  - name: Copy  kubelet.kubeconfig (kubelet auth. ) file
+    template:
+      src: kubelet.kubeconfig.j2
+      dest: /etc/kubernetes/kubelet.kubeconfig
+    notify:
+      - restart kubelet
+
+  - name: Create the /etc/kubernetes/certs directory
+    file:
+      path: /etc/kubernetes/certs
+      state: directory
+
+  - name: Copy to node cert authoroty ca.crt(master) ->  ca.crt(node)
+    synchronize:
+      src: /etc/kubernetes/certs/ca.crt
+      dest: /etc/kubernetes/certs/ca.crt
+      rsync_timeout: "20"
+      verify_host: False
+    delegate_to: "{{ groups['master'][0] }}"

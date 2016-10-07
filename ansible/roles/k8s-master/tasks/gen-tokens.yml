@@ -1,0 +1,24 @@
+---
+
+  - name: Mkdir cert dir
+    file:
+      state: directory
+      path: "/etc/kubernetes/tokens"
+
+  - name: Copy token gen script.
+    copy:
+      src: kube-gen-token.sh
+      dest: /etc/kubernetes/tokens/kube-gen-token.sh
+      mode: 0500
+
+  - name: Run kube-gen-token script to create known_tokens.csv
+    command: "/etc/kubernetes/tokens/kube-gen-token.sh {{ item }}"
+    environment:
+      TOKEN_DIR: "/etc/kubernetes/tokens/"
+    with_items:
+      - "system:kubelet"
+      - "system:kube-proxy"
+    register: gentoken
+    changed_when: "'Added' in gentoken.stdout"
+    notify:
+      - restart kubelet

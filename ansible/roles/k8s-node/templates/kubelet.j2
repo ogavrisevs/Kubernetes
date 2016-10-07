@@ -1,4 +1,7 @@
+#
+# These variables are loaded as EnvironmentFile for kubelet.service
+#
 KUBELET_ADDRESS="--address=0.0.0.0"
 KUBELET_HOSTNAME="--hostname-override={{ inventory_hostname }}"
-KUBELET_API_SERVER="--api_servers=http://master.example.com:8080"
-KUBELET_ARGS="--register-node=true --cluster-dns=10.254.8.8 --cluster-domain=example.com"
+KUBELET_API_SERVER=""
+KUBELET_ARGS="--require-kubeconfig=true --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --register-node=true --cluster-dns=10.254.8.8 --cluster-domain=example.com"

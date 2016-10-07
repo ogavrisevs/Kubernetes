@@ -1,7 +1,9 @@
 ---
-  #export DO_API_TOKEN=32*****************************2
+
   - name: Create droplets
     hosts: digitalocean
+    environment:
+      - DO_API_TOKEN: "32****************************************************a2"
     tasks:
     - name: Install DO API lib
       pip:

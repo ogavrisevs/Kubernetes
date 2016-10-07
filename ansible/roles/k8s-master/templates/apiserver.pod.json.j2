@@ -13,16 +13,16 @@
         "command": [
           "/hyperkube",
           "apiserver",
-          "--insecure-bind-address=0.0.0.0",
+          "--insecure-bind-address=127.0.0.1",
           "--bind-address=0.0.0.0",
           "--etcd_servers=http://master.example.com:2379",
           "--service-cluster-ip-range=10.254.0.0/16",
           "--secure-port=6443",
           "--insecure-port=8080",
           "--basic-auth-file=/etc/kubernetes/htpasswd",
-          "--tls-cert-file=/var/run/kubernetes/kubelet.crt",
-          "--tls-private-key-file=/var/run/kubernetes/kubelet.key",
+          "--token-auth-file=/etc/kubernetes/tokens/known_tokens.csv",
           "--client-ca-file=/etc/kubernetes/certs/ca.crt",
+          "--service-account-key-file=/etc/kubernetes/certs/server.crt",
           "--tls-cert-file=/etc/kubernetes/certs/server.crt",
           "--tls-private-key-file=/etc/kubernetes/certs/server.key",
           "--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota",
@@ -31,8 +31,8 @@
         "ports": [
           {
             "name": "https",
-            "hostPort": 443,
-            "containerPort": 443
+            "hostPort": 6443,
+            "containerPort": 6443
           },
           {
             "name": "local",

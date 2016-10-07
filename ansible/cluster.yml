@@ -1,7 +1,7 @@
 ---
 
   - name: K8 all nodes
-    hosts: all-k8s
+    hosts: all-k8s-nodes
     user: root
     roles:
       - common
@@ -55,4 +55,5 @@
     roles:
       - glusterfs
     tags:
+      - nodes
       - glusterfs

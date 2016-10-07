@@ -1,9 +1,10 @@
 ---
-  #export DO_API_TOKEN=32*****************************2
+
   - name: Create droplets
     hosts: digitalocean
+    environment:
+      - DO_API_TOKEN: "32****************************************************a2"
     tasks:
-
     - name: Install DO API lib
       pip:
         name: dopy
@@ -31,8 +32,8 @@
       register: my_droplet
       with_items:
         - master
-        #- node-1
-        #- node-2
+        - node-1
+        - node-2
 
     - debug:
         msg: "{{ item.droplet.name }} , {{ item.droplet.ip_address }}"

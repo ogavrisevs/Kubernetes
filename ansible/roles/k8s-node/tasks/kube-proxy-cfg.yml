@@ -1,0 +1,37 @@
+---
+
+  - name: Get the node token values for proxy
+    slurp:
+      src: "/etc/kubernetes/tokens/system:kube-proxy.token"
+    register: tokens
+    delegate_to: "{{ groups['master'][0] }}"
+
+  - name: Set token facts proxy_token
+    set_fact:
+      proxy_token: "{{ tokens.content|b64decode }}"
+
+  - name: Add kube-proxy conf.
+    template:
+      src: proxy.j2
+      dest: /etc/kubernetes/proxy
+    notify:
+      - restart kube-proxy
+
+  - name: Copy  kube-proxy.kubeconfig (kubelet auth. ) file
+    template:
+      src: kube-proxy.kubeconfig.j2
+      dest: /etc/kubernetes/kube-proxy.kubeconfig
+    notify:
+      - restart kube-proxy
+
+  - name: Create the /etc/kubernetes/certs directory
+    file:
+      path: /etc/kubernetes/certs
+      state: directory
+
+  - name: Copy to node cert authoroty ca.crt(master) ->  ca.crt(node)
+    synchronize:
+      src: /etc/kubernetes/certs/ca.crt
+      dest: /etc/kubernetes/certs/ca.crt
+      rsync_timeout: "20"
+    delegate_to: "{{ groups['master'][0] }}"
