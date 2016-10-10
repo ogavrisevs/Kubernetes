@@ -1,4 +1,4 @@
-# Copyright 2016 The Kubernetes Authors.
+# Copyright 2015 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,27 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO - At some point, we need to rename all skydns-*.yaml.* files to kubedns-*.yaml.*
+# Configuration to deploy release version of the Dashboard UI.
+#
+# Example usage: kubectl create -f <this_file>
 
-# Warning: This is a file generated from the base underscore template file: skydns-svc.yaml.base
-
-apiVersion: v1
+---
 kind: Service
+apiVersion: v1
 metadata:
-  name: kube-dns
-  namespace: kube-system
   labels:
-    k8s-app: kube-dns
-    kubernetes.io/cluster-service: "true"
-    kubernetes.io/name: "KubeDNS"
+    app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
 spec:
-  selector:
-    k8s-app: kube-dns
-  clusterIP: 10.254.8.8
+  type: NodePort
   ports:
-  - name: dns
-    port: 53
-    protocol: UDP
-  - name: dns-tcp
-    port: 53
-    protocol: TCP
+  - port: 80
+    targetPort: 9090
+  selector:
+    app: kubernetes-dashboard

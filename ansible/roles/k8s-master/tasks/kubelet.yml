@@ -33,3 +33,10 @@
       name: kubelet
       enabled: yes
       state: started
+
+  - name: Wait for kubelet to start
+    wait_for:
+      host: 127.0.0.1
+      port: 8080
+      delay: 30
+      state: started

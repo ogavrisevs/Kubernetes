@@ -33,9 +33,9 @@
       name: kubelet
       state: started
 
-  - name: wait kubelet to start
+  - name: wait kubelet to star
     wait_for:
-      host: localhost
+      host: 127.0.0.1
       port: 8080
-      delay: 10
+      delay: 30
       state: started

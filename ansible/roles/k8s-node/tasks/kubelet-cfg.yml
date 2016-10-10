@@ -2,7 +2,7 @@
 
   - name: Get the node token values
     slurp:
-      src: "/etc/kubernetes/tokens/system:kubelet.token"
+      src: "/etc/kubernetes/tokens/kubelet.token"
     register: tokens
     delegate_to: "{{ groups['master'][0] }}"
 

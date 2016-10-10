@@ -2,7 +2,7 @@
 
   - name: Get the node token values for proxy
     slurp:
-      src: "/etc/kubernetes/tokens/system:kube-proxy.token"
+      src: "/etc/kubernetes/tokens/kube-proxy.token"
     register: tokens
     delegate_to: "{{ groups['master'][0] }}"
 

@@ -8,6 +8,21 @@
       - skydns-rc
       - skydns-svc
 
+  - name: Get the node token values
+    slurp:
+      src: "/etc/kubernetes/tokens/skydns.token"
+    register: tokens
+    delegate_to: "{{ groups['master'][0] }}"
+
+  - name: Set token facts
+    set_fact:
+      skydns_token: "{{ tokens.content|b64decode }}"
+
+  - name: Copy skydns.kubeconfig ( dns auth. ) file
+    template:
+      src: skydns.kubeconfig.j2
+      dest: /etc/kubernetes/skydns.kubeconfig
+
   - name: Create a skydns-rc service
     command: "kubectl create -f /root/skydns-rc.yaml"
     register: out-skydns-rc

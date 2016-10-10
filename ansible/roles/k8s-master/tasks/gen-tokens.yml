@@ -16,8 +16,10 @@
     environment:
       TOKEN_DIR: "/etc/kubernetes/tokens/"
     with_items:
-      - "system:kubelet"
-      - "system:kube-proxy"
+      - "kubelet"
+      - "kube-proxy"
+      - "skydns"
+      - "dashboard"
     register: gentoken
     changed_when: "'Added' in gentoken.stdout"
     notify:

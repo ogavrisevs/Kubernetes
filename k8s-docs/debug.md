@@ -41,3 +41,16 @@ Check services
     kubectl --namespace=kube-system describe pods kube-dns-v19-3boaj
     kubectl --namespace=kube-system logs  kube-dns-v19-jbl7y kubedns
     kubectl get componentstatuses
+
+
+Test security
+--------------
+
+    KUBE_TOKEN=$(</etc/kubernetes/tokens/kube-proxy.token)
+    curl -sSk -H "Authorization: Bearer $KUBE_TOKEN" https://master.example.com:6443
+
+    #Basic BASE64ENCODED(USER:PASSWORD)
+    KUBE_TOKEN=$(</etc/kubernetes/tokens/kube-proxy.token)
+    curl -sSk -H "Authorization: Basic dXNlcjpwYXNzd29yZA==" https://master.example.com:6443
+
+    curl --cacert /etc/kubernetes/certs/ca.crt -u user:password https://master.example.com:6443

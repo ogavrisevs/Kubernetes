@@ -1,13 +1,36 @@
 ---
 
-  - name: Create kubernetes-dashboard.yaml
+  - name: Create kubernetes-dashboard deployment.yaml
     template:
-        src: "kubernetes-dashboard.yaml.j2"
-        dest: "/root/kubernetes-dashboard.yaml"
+        src: "dashboard-dep.yaml.j2"
+        dest: "/root/dashboard-dep.yaml"
+
+  - name: Create kubernetes-dashboard service.yaml
+    template:
+        src: "dashboard-srv.yaml.j2"
+        dest: "/root/dashboard-srv.yaml"
+
+
+  - name: Get the node token values
+    slurp:
+      src: "/etc/kubernetes/tokens/dashboard.token"
+    register: tokens
+    delegate_to: "{{ groups['master'][0] }}"
+
+  - name: Set token facts
+    set_fact:
+      dashboard_token: "{{ tokens.content|b64decode }}"
+
+  - name: Copy dashboard.kubeconfig file
+    template:
+      src: dashboard.kubeconfig.j2
+      dest: /etc/kubernetes/dashboard.kubeconfig
 
   - name: Create a kubernetes-dashboard service
-    command: "kubectl create -f /root/kubernetes-dashboard.yaml"
-    register: out-kubernetes-dashboard
+    command: "kubectl create -f /root/{{ item }}.yaml"
+    with_items:
+      - "dashboard-dep"
+      - "dashboard-srv"
     ignore_errors: yes
 
   - name: Get kubernetes-dashboard service port
