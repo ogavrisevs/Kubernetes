@@ -5,10 +5,10 @@ metadata:
   namespace: default
 subsets:
   - addresses:
-      - ip: 138.68.77.226
+      - ip: 46.101.192.50
     ports:
       - port: 1
   - addresses:
-      - ip: 138.68.77.250
+      - ip: 46.101.129.172
     ports:
       - port: 1

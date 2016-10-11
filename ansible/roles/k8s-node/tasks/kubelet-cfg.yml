@@ -10,6 +10,11 @@
     set_fact:
       kubelet_token: "{{ tokens.content|b64decode }}"
 
+  - name: Create the /etc/kubernetes directory
+    file:
+      path: /etc/kubernetes
+      state: directory
+      
   - name: Add kublet conf.
     template:
       src: kubelet.j2

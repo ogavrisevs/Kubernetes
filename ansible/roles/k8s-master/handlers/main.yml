@@ -33,7 +33,7 @@
       name: kubelet
       state: started
 
-  - name: wait kubelet to star
+  - name: wait kubelet to start
     wait_for:
       host: 127.0.0.1
       port: 8080

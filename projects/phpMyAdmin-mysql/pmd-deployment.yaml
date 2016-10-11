@@ -38,7 +38,7 @@ spec:
             - name: PMA_USER
               value: user
             - name: PMA_PASSWORD
-              value: password
+              value: pass
             - name: PMA_ARBITRARY
               value: "1"
           ports:

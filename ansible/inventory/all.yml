@@ -1,9 +1,9 @@
 [master]
-master.example.com ansible_host=138.68.81.172
+master.example.com ansible_host=46.101.255.226
 
 [nodes]
-node-1.example.com ansible_host=46.101.117.32
-#node-2.example.com ansible_host=138.68.81.192
+node-1.example.com ansible_host=46.101.192.50
+node-2.example.com ansible_host=46.101.129.172
 
 [all-k8s-nodes:children]
 master

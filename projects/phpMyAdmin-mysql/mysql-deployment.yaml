@@ -34,7 +34,13 @@ spec:
             - name: MYSQL_USER
               value: user
             - name: MYSQL_PASSWORD
-              value: password
+              value: pass
+            - name: MYSQL_RANDOM_ROOT_PASSWORD
+              value: "true"
+              #valueFrom:
+              #  secretKeyRef:
+              #    name: mysql-pass
+              #    key: password.txt
           ports:
             - containerPort: 3306
               name: mysql-port

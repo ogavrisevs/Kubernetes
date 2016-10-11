@@ -24,7 +24,7 @@
     notify:
       - restart kube-proxy
 
-  - name: Create the /etc/kubernetes/certs directory
+  - name: Create the certs directory
     file:
       path: /etc/kubernetes/certs
       state: directory
