@@ -8,4 +8,5 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  volumeName: gluster-default-volume
+  volumeName:
+    

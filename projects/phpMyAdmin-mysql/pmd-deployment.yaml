@@ -50,3 +50,5 @@ spec:
               port: pma-port
             initialDelaySeconds: 15
             timeoutSeconds: 1
+      nodeSelector:
+        node: slaves

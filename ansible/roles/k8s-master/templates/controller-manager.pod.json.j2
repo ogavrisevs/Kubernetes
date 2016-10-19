@@ -13,6 +13,8 @@
         "command": [
           "/hyperkube",
           "controller-manager",
+          "--service-account-private-key-file=/etc/kubernetes/certs/server.key",
+          "--root-ca-file=/etc/kubernetes/certs/ca.crt",
           "--master=http://127.0.0.1:8080"
         ],
         "volumeMounts": [

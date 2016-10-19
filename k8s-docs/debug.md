@@ -48,9 +48,16 @@ Test security
 
     KUBE_TOKEN=$(</etc/kubernetes/tokens/kube-proxy.token)
     curl -sSk -H "Authorization: Bearer $KUBE_TOKEN" https://master.example.com:6443
+    curl -sSk -H "Authorization: Bearer OMTQveASD8Ye4WAjEPmxa3xZQrCqXS9Q" https://138.68.86.61:6443
 
     #Basic BASE64ENCODED(USER:PASSWORD)
     KUBE_TOKEN=$(</etc/kubernetes/tokens/kube-proxy.token)
     curl -sSk -H "Authorization: Basic dXNlcjpwYXNzd29yZA==" https://master.example.com:6443
 
     curl --cacert /etc/kubernetes/certs/ca.crt -u user:password https://master.example.com:6443
+
+Service Account
+----------------
+
+    kubectl get serviceaccount
+    kubectl get serviceaccount default -o yaml

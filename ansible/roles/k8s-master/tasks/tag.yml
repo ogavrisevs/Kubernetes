@@ -1,0 +1,11 @@
+---
+
+  - name: Add labels to master
+    command: "kubectl label nodes master.example.com node=master"
+    ignore_errors: yes
+
+  - name: Add labesl to slave
+    command: "kubectl label nodes {{ items }} node=slaves"
+    ignore_errors: yes
+    with_items:
+      - "{{ groups['nodes'] }}"

@@ -35,6 +35,7 @@ Create volume
   gluster volume set testvol auth.allow client1.example.com
   gluster volume set testvol auth.allow 138.68.78.83
 
+
 Prepare client
 --------------
 

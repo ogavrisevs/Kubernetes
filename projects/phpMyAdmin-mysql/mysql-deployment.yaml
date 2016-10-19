@@ -34,13 +34,13 @@ spec:
             - name: MYSQL_USER
               value: user
             - name: MYSQL_PASSWORD
-              value: pass
-            - name: MYSQL_RANDOM_ROOT_PASSWORD
-              value: "true"
+              value: password
               #valueFrom:
               #  secretKeyRef:
               #    name: mysql-pass
               #    key: password.txt
+            - name: MYSQL_RANDOM_ROOT_PASSWORD
+              value: "true"
           ports:
             - containerPort: 3306
               name: mysql-port
@@ -52,6 +52,8 @@ spec:
               port: mysql-port
             initialDelaySeconds: 15
             timeoutSeconds: 1
+      nodeSelector:
+        node: slaves
       volumes:
         - name: mysql-glusterf-storage
           persistentVolumeClaim:

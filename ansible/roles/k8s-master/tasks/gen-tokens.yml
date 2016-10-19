@@ -20,6 +20,7 @@
       - "kube-proxy"
       - "skydns"
       - "dashboard"
+      - "tiller"
     register: gentoken
     changed_when: "'Added' in gentoken.stdout"
     notify:

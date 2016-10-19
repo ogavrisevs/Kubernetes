@@ -10,7 +10,6 @@
         src: "dashboard-srv.yaml.j2"
         dest: "/root/dashboard-srv.yaml"
 
-
   - name: Get the node token values
     slurp:
       src: "/etc/kubernetes/tokens/dashboard.token"

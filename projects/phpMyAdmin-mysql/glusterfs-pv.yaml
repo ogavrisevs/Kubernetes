@@ -4,7 +4,7 @@ metadata:
   name: gluster-default-volume
 spec:
   capacity:
-    storage: 10Gi
+    storage: 20Gi
   accessModes:
     - ReadWriteMany
   glusterfs:
