@@ -25,8 +25,8 @@
           "--service-account-key-file=/etc/kubernetes/certs/server.crt",
           "--tls-cert-file=/etc/kubernetes/certs/server.crt",
           "--tls-private-key-file=/etc/kubernetes/certs/server.key",
-          "--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota",
-          "--allow-privileged=false"
+          "--admission-control=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ResourceQuota,ServiceAccount",
+          "--allow-privileged=true"
         ],
         "ports": [
           {

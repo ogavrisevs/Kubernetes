@@ -4,4 +4,4 @@
 KUBELET_ADDRESS="--address=0.0.0.0"
 KUBELET_HOSTNAME="--hostname-override={{ inventory_hostname }}"
 KUBELET_API_SERVER=""
-KUBELET_ARGS="--healthz-bind-address=127.0.0.1 --healthz-port=10248 --require-kubeconfig=true --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --register-node=true --cluster-dns=10.254.8.8 --cluster-domain=example.com"
+KUBELET_ARGS="--healthz-bind-address=127.0.0.1 --healthz-port=10248 --require-kubeconfig=true --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --register-node=true --cluster-dns=10.254.8.8 --cluster-domain=example.com --allow-privileged=true"

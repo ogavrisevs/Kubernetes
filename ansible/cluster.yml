@@ -49,11 +49,11 @@
     tags:
       - nodes
 
-  - name: K8S nodes
-    hosts: nodes
-    user: root
-    roles:
-      - glusterfs
-    tags:
-      - nodes
-      - glusterfs
+#  - name: K8S nodes
+#    hosts: nodes
+#    user: root
+#    roles:
+#      - glusterfs
+#    tags:
+#      - nodes
+#      - glusterfs

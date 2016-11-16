@@ -1,21 +1,4 @@
 ---
 
-  - name: Download kubernetes release v1.4.0
-    get_url:
-      url: https://github.com/kubernetes/kubernetes/releases/download/v1.4.0/kubernetes.tar.gz
-      dest: /root/kubernetes.tar.gz
-      mode: 0440
-
-  - name: Unarchive release
-    unarchive:
-      src: /root/kubernetes.tar.gz
-      creates: /root/kubernetes
-      copy: no
-      dest: /root
-
-  - name: Unarchive binaries for amd64
-    unarchive:
-      src: /root/kubernetes/server/kubernetes-server-linux-amd64.tar.gz
-      dest: /root
-      copy: no
-      creates: /root/kubernetes/server/bin
+  - include: k8s-tar.yml
+  - include: swap.yml

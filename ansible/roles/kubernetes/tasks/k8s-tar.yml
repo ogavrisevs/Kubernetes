@@ -1,0 +1,14 @@
+---
+  
+  - name: Download kubernetes release v1.4.5
+    get_url:
+      url: https://storage.googleapis.com/kubernetes-release/release/v1.4.5/kubernetes-server-linux-amd64.tar.gz
+      dest: /root/kubernetes.tar.gz
+      mode: 0440
+
+  - name: Unarchive release
+    unarchive:
+      src: /root/kubernetes.tar.gz
+      creates: /root/kubernetes
+      copy: no
+      dest: /root

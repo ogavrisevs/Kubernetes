@@ -8,3 +8,5 @@
     - tree
     - telnet
     - glusterfs-client
+    - socat
+    - iotop

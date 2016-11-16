@@ -20,6 +20,6 @@
 
   - name: Enable/Start kube-proxy service
     service:
-      name: "kube-proxy"
+      name: kube-proxy
       enabled: yes
       state: started

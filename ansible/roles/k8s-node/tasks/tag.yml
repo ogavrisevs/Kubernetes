@@ -1,0 +1,7 @@
+---
+
+  - name: Add labesl to slave
+    command: "kubectl label nodes {{ item }} node=slaves --overwrite=true"
+    ignore_errors: yes
+    with_items: "{{ groups['nodes'] }}"
+    delegate_to: "master.example.com"

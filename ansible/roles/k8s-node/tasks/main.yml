@@ -1,6 +1,7 @@
 ---
-  
+
   - include: ssh.yml
   - include: kubectl.yml
   - include: kubelet-install.yml
   - include: kube-proxy-install.yml
+  - include: tag.yml

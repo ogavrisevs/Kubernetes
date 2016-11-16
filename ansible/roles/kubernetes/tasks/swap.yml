@@ -1,0 +1,33 @@
+---
+
+
+  - name: Create swap files
+    command: dd if=/dev/zero of=/swapfile bs=1M count=2048
+    args:
+      creates: "/swapfile"
+
+  - name: Enforce permissions
+    file:
+      path: /swapfile
+      state: 'file'
+      owner: 'root'
+      group: 'root'
+      mode: '0600'
+
+  - name: Initialize swap files
+    command: mkswap /swapfile
+    ignore_errors: true
+
+  - name: Enable swap files
+    command: swapon /swapfile
+    ignore_errors: true
+
+  - name: Manage swap files in /etc/fstab
+    mount:
+      src: /swapfile
+      name:   'none'
+      fstype: 'swap'
+      opts:   'sw,nofail,pri=-1'
+      dump:   '0'
+      passno: '0'
+      state:  present
