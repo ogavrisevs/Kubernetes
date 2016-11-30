@@ -22,7 +22,7 @@
     - digital_ocean:
         state: present
         command: droplet
-        name: "centos-1gb-fra1-{{ item }}"
+        name: "centos-1gb-fra1-master"
         unique_name: yes
         size_id: 1gb
         region_id: fra1
@@ -30,12 +30,45 @@
         ssh_key_ids: "{{ my_ssh_key.ssh_key.id }}"
         wait_timeout: 500
       register: my_droplet
+
+    - debug:
+        msg: "{{ my_droplet.droplet.name }} , {{ my_droplet.droplet.ip_address }}"
+
+    - digital_ocean:
+        state: present
+        command: droplet
+        name: "centos-1gb-fra1-{{ item }}"
+        unique_name: yes
+        size_id: 1gb
+        region_id: fra1
+        image_id: centos-7-2-x64
+        ssh_key_ids: "{{ my_ssh_key.ssh_key.id }}"
+        wait_timeout: 500
+      register: my_droplets
       with_items:
-        - master
         - node-1
         - node-2
 
     - debug:
         msg: "{{ item.droplet.name }} , {{ item.droplet.ip_address }}"
-        #verbosity: "1"
-      with_items: "{{ my_droplet.results }}"
+      with_items: "{{ my_droplets.results }}"
+
+    #From ansible v2.2
+    #- digital_ocean_block_storage:
+    #    api_token: "sd"
+    #    state: present
+    #    command: create
+    #    region: fra1
+    #    block_size: 30
+    #    volume_name: "volume-fra1-30gb-{{ item }}"
+    #  with_items:
+    #    - node-1
+    #    - node-2
+    #
+    # - digital_ocean_block_storage:
+    #     state: present
+    #     command: attach
+    #     volume_name: nyc1-block-storage
+    #     region: fra1
+    #     droplet_id: "item.droplet.id"
+    #   with_items: "{{ my_droplets.results }}"

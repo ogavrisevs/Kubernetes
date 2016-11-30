@@ -1,14 +1,23 @@
 ---
 
-  - name: Build hosts file
+  - name: Build hosts file with pub. access hosts
     lineinfile:
       dest: /etc/hosts
       regexp: '.*{{ item }}$'
-      line: "{{ hostvars[item].ansible_default_ipv4.address }} {{item}}"
+      line: "{{ hostvars[item].ansible_default_ipv4.address }} {{ item }}"
       state: present
     when: hostvars[item].ansible_default_ipv4.address is defined
     with_items:
-      - "{{ groups['all'] }}"
+      - "{{ groups['nodes_pub_access_eth'] }}"
+      - "{{ groups['master'] }}"
+
+  - name: Build hosts file with nat hosts
+    lineinfile:
+      dest: /etc/hosts
+      regexp: '.*{{ item }}$'
+      line: "{{ hostvars[item].ansible_host }} {{ item }}"
+      state: present
+    with_items: groups.scaleway_nodes
 
   - name: Add Epel Repo
     yum:

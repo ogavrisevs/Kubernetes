@@ -1,7 +1,15 @@
 ---
 
+  # starting from v2.2
+  #- name: Disabel firewalld
+  #  systemd:
+  #    name: firewalld
+  #    state: stopped
+  #    enabled: no
+  #    masked: yes
+
   - name: Disabel firewalld
-    systemd:
+    service:
       name: firewalld
+      enabled: no
       state: stopped
-      enabled: False

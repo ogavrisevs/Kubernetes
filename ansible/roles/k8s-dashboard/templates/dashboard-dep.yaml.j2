@@ -25,6 +25,13 @@ spec:
         ports:
         - containerPort: 9090
           protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 50Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
         volumeMounts:
           - name: ca-crt
             mountPath: /etc/kubernetes/certs/ca.crt
