@@ -18,6 +18,13 @@
       enabled: yes
       state: started
 
+  - name: Wait for glusterfsd to start
+    wait_for:
+      host: localhost
+      port: 24007
+      delay: 10
+      state: started
+
   - set_fact:
       peer_list: |
         {% set comma = joiner(",") %}

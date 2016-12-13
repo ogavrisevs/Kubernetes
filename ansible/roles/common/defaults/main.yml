@@ -10,3 +10,4 @@
     - glusterfs-client
     - socat
     - iotop
+    - lsof
