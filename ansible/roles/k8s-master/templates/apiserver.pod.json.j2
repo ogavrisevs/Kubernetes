@@ -9,7 +9,7 @@
     "containers": [
       {
         "name": "kube-apiserver",
-        "image": "gcr.io/google_containers/hyperkube:v1.4.0",
+        "image": "gcr.io/google_containers/hyperkube:v1.5.0",
         "command": [
           "/hyperkube",
           "apiserver",
@@ -26,7 +26,9 @@
           "--tls-cert-file=/etc/kubernetes/certs/server.crt",
           "--tls-private-key-file=/etc/kubernetes/certs/server.key",
           "--admission-control=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ResourceQuota,ServiceAccount",
-          "--allow-privileged=true"
+          "--allow-privileged=true",
+          "--runtime-config=batch/v2alpha1",
+          "--anonymous-auth=false"
         ],
         "ports": [
           {
