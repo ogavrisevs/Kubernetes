@@ -1,12 +1,12 @@
-
-
 Install helm
 ------------
 
-    curl http://storage.googleapis.com/kubernetes-helm/helm-v2.0.0-alpha.5-linux-amd64.tar.gz -o  helm-v2.0.0-alpha.5-linux-amd64.tar.gz
-    tar -zxvf helm-v2.0.0-alpha.5-linux-amd64.tar.gz
+    curl http://storage.googleapis.com/kubernetes-helm/helm-v2.0.0-beta.1-linux-amd64.tar.gz -o  helm-linux-amd64.tar.gz
+    tar -zxvf helm-linux-amd64.tar.gz
     mv linux-amd64/helm /usr/local/bin/helm
 
+Install helm (canary)
+---------------------
 
     curl http://storage.googleapis.com/kubernetes-helm/helm-canary-linux-amd64.tar.gz -o helm-canary-linux-amd64.tar.gz
     tar -zxvf helm-canary-linux-amd64.tar.gz
@@ -22,17 +22,24 @@ Install helm from source
     tar -C /usr/local -xzf go1.7.1.linux-amd64.tar.gz
     curl https://glide.sh/get | sh
 
-
 Install tiller
 --------------
 
-    #helm init
+    # auth. with ServiceAccount (notworking )
+    helm init
+    or
+
     mkdir /etc/kubernetes
     #copy token and master ip
     vim /etc/kubernetes/tiller.kubeconfig
     vim /root/tiller-do.yaml
     kubectl create -f tiller-do.yaml
 
+
+Remove tiller
+-------------
+
+    kubectl delete deploy tiller-deploy --namespace=kube-system
 
 Set up helm
 ------------

@@ -11,13 +11,13 @@
       - "{{ groups['nodes_pub_access_eth'] }}"
       - "{{ groups['master'] }}"
 
-  - name: Build hosts file with nat hosts
-    lineinfile:
-      dest: /etc/hosts
-      regexp: '.*{{ item }}$'
-      line: "{{ hostvars[item].ansible_host }} {{ item }}"
-      state: present
-    with_items: groups.scaleway_nodes
+  #- name: Build hosts file with nat hosts
+  #  lineinfile:
+  #    dest: /etc/hosts
+  #    regexp: '.*{{ item }}$'
+  #    line: "{{ hostvars[item].ansible_host }} {{ item }}"
+  #    state: present
+  #  with_items: groups.scaleway_nodes
 
   - name: Add Epel Repo
     yum:
@@ -31,5 +31,7 @@
     with_items:
       - "{{ utils_rpm }}"
 
-  - include: fail2ban.yml
+  - include_role:
+      name: fail2ban
+
   - include: firewall.yml

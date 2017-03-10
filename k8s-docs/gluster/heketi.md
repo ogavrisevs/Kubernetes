@@ -1,9 +1,12 @@
 Install heketi
 ---------------
 
-    yum install heketi heketi-client
+    yum install heketi heketi-client -y
     # copy config  
     vim /etc/heketi/heketi.json
+
+    vim /etc/passwd
+      heketi:x:995:991:heketi user:/var/lib/heketi:/bin/bash  
 
     su heketi
     ssh-keygen
@@ -12,10 +15,11 @@ Install heketi
 
     systemctl enable heketi
     systemctl start heketi
+    export HEKETI_CLI_SERVER=http://localhost:8081
     heketi-cli topology load --json=topo.json
 
 Check heketi
 ---------------
 
-    heketi-cli volume create --size=10 --replica=1
+    heketi-cli volume create --size=10 --replica=0
     gluster volume list

@@ -12,7 +12,7 @@ Create (GlusterFs)
     kubectl create -f mysql-deployment.yaml
     kubectl create -f pmd-deployment.yaml
 
-    rsync -avz . root@139.59.210.124:/root/phpMyAdmin-mysql
+    rsync -avz . root@46.101.230.181:/root/phpMyAdmin-mysql
 
 Delete
 ---------

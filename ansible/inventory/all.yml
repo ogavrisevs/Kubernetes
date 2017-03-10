@@ -1,9 +1,28 @@
 [master]
-master.example.com ansible_host=46.101.255.226
+master.example.com ansible_host=46.101.194.182
 
-[nodes]
-node-1.example.com ansible_host=46.101.192.50
-node-2.example.com ansible_host=46.101.129.172
+[nodes:children]
+vultr_nodes
+do_nodes
+scaleway_nodes
+
+[nodes_pub_access_eth:children]
+vultr_nodes
+do_nodes
+
+[vultr_nodes]
+#node-5.example.com ansible_host=108.61.103.92
+#node-7.example.com ansible_host=45.76.136.108
+
+[do_nodes]
+#node-1.example.com ansible_host=46.101.167.158
+
+[scaleway_nodes]
+node-1.example.com ansible_host=212.47.233.116
+node-2.example.com ansible_host=163.172.186.31
+node-3.example.com ansible_host=51.15.46.127
+node-4.example.com ansible_host=51.15.49.243
+
 
 [all-k8s-nodes:children]
 master

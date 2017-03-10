@@ -1,0 +1,19 @@
+---
+
+  - name: install fail2ban
+    yum:
+      name: fail2ban
+      state: present
+
+  - name: configure fail2ban local jails
+    template:
+      src: 10-sshd.conf.j2
+      dest: /etc/fail2ban/jail.d/10-sshd.conf
+      mode: 0644
+    notify: restart fail2ban
+
+  - name: start/stop fail2ban service
+    service:
+      name: fail2ban
+      state: started
+      enabled: true
