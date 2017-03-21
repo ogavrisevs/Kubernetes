@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  selector:
+    app: kubernetes-dashboard
+  ports:
+  - name: dashboard-new-port
+    targetPort: 9090
+    port: 9090

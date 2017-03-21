@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-conf
+  namespace: kube-system
+data:
+  traefik.toml: |
+    # traefik.toml
+    logLevel = "INFO"
+    defaultEntryPoints = ["http"]
+    [entryPoints]
+      [entryPoints.http]
+      address = ":80"
+      [entryPoints.http.auth.basic]
+      users = ["admin:$apr1$D3nG1B.N$.hV4PX7oNa6mC1uuU6fKB."]
+
+#    [frontends]
+#      [frontends.frontend1]
+#      backend = "ui-backend"
+#        [frontends.frontend1.routes.test_1]
+#        rule = "Host:ui.example.com"
+#      [frontends.frontend2]
+#      backend = "traefik-backend"
+#        [frontends.frontend2.routes.test_1]
+#        rule = "Host:traefik.example.com"
+
+#    [backends]
+#      [backends.ui-backend]
+#        [backends.ui-backend.servers.server1]
+#        url = "http://10.254.14.59:9090"
+#      [backends.backend2]
+#        [backends.traefik-backend.servers.server1]
+#        url = "http://10.254.29.18:8081"

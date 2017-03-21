@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: centos
-  namespace: default
+  namespace: kube-system
 spec:
   containers:
   - image: centos
@@ -12,3 +12,5 @@ spec:
     imagePullPolicy: IfNotPresent
     name: centos
   restartPolicy: Always
+  nodeSelector:
+    node: master
