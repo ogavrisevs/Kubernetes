@@ -1,5 +1,5 @@
 [master]
-master.example.com ansible_host=46.101.194.182
+master.example.com ansible_host=46.101.103.194
 
 [nodes:children]
 vultr_nodes
@@ -15,14 +15,14 @@ do_nodes
 #node-7.example.com ansible_host=45.76.136.108
 
 [do_nodes]
-#node-1.example.com ansible_host=46.101.167.158
+#node-1.example.com ansible_host=165.227.134.78
 
 [scaleway_nodes]
-node-1.example.com ansible_host=212.47.233.116
-node-2.example.com ansible_host=163.172.186.31
-node-3.example.com ansible_host=51.15.46.127
-node-4.example.com ansible_host=51.15.49.243
-
+node-11.example.com ansible_host=212.47.244.3
+node-12.example.com ansible_host=51.15.135.115
+node-13.example.com ansible_host=51.15.37.65
+node-14.example.com ansible_host=51.15.61.73
+node-15.example.com ansible_host=212.47.251.14
 
 [all-k8s-nodes:children]
 master

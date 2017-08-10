@@ -38,7 +38,7 @@ spec:
         - --web
         - --web.address=:8081
         - --kubernetes
-        - --kubernetes.endpoint=https://46.101.194.182:6443
+        - --kubernetes.endpoint=https://46.101.103.194:6443
         - --kubernetes.namespaces=default,crawler,kube-system
         - --configFile=/etc/traefik/traefik.toml
         - --logLevel=INFO

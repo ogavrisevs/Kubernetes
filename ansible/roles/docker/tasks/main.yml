@@ -7,7 +7,7 @@
 
   - name: Install Docker
     yum:
-      name: docker-engine
+      name: docker-engine-1.12.5-1.el7.centos
       state: latest
 
   - name: Enable docker service

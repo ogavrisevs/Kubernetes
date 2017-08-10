@@ -5,7 +5,7 @@
     user: root
     roles:
       - common
-#      - kubernetes
+      - kubernetes
     tags:
       - all-nodes
 
